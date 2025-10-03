@@ -1,0 +1,50 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Percent Test
+      id: percent-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Percent Test
+        setup-command: "./setup.sh"
+        command: "./tests/run-percentage.sh"
+        timeout: 10
+        max-score: 2
+    - name: Dice Runner Test
+      id: dice-runner-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Dice Runner Test
+        setup-command: "./setup.sh"
+        command: "./tests/run-dice.sh"
+        timeout: 10
+        max-score: 2
+    - name: Phone Number Test
+      id: phone-number-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Phone Number Test
+        setup-command: "./setup.sh"
+        command: "./tests/run-phone.sh"
+        timeout: 10
+        max-score: 6
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PERCENT-TEST_RESULTS: "${{steps.percent-test.outputs.result}}"
+        DICE-RUNNER-TEST_RESULTS: "${{steps.dice-runner-test.outputs.result}}"
+        PHONE-NUMBER-TEST_RESULTS: "${{steps.phone-number-test.outputs.result}}"
+      with:
+        runners: percent-test,dice-runner-test,phone-number-test
