@@ -21,6 +21,6 @@ public class RandomPercentage {
 
         DecimalFormat df = new DecimalFormat("##0.00");
 
-        System.out.printf("Unseeded Random: %s%nSeeded Random: %s",(df.format(rand.nextDouble() * 100)),df.format(rand1.nextDouble() * 100));
+        System.out.printf("Unseeded Random: %s%%%nSeeded Random: %s%%",(df.format(rand.nextDouble() * 100)),df.format(rand1.nextDouble() * 100));
     }
 }
