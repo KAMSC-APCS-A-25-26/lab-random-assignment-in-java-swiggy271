@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import java.text.DecimalFormat;
 public class RandomPercentage {
     public static void main(String[] args) {
         // TODO: Create two Random objects
@@ -16,5 +16,11 @@ public class RandomPercentage {
         // TODO: Display the values as percentages
         // Show both unseeded and seeded random values
         // Each value should be formatted as below
+        Random rand = new Random();
+        Random rand1 = new Random(22);
+
+        DecimalFormat df = new DecimalFormat("##0.00");
+
+        System.out.printf("Unseeded Random: %s%nSeeded Random: %s",(df.format(rand.nextDouble() * 100)),df.format(rand1.nextDouble() * 100));
     }
 }
